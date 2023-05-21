@@ -1,0 +1,11 @@
+<Bindings>
+    <Binding name="CLICK HunterTrackingButtonTrackBeasts:LeftButton" category="Hunter Tracking"/>
+    <Binding name="CLICK HunterTrackingButtonTrackDemons:LeftButton" category="Hunter Tracking"/>
+    <Binding name="CLICK HunterTrackingButtonTrackDragonkin:LeftButton" category="Hunter Tracking"/>
+    <Binding name="CLICK HunterTrackingButtonTrackElementals:LeftButton" category="Hunter Tracking"/>
+    <Binding name="CLICK HunterTrackingButtonTrackGiants:LeftButton" category="Hunter Tracking"/>
+    <Binding name="CLICK HunterTrackingButtonTrackHidden:LeftButton" category="Hunter Tracking"/>
+    <Binding name="CLICK HunterTrackingButtonTrackHumanoids:LeftButton" category="Hunter Tracking"/>
+    <Binding name="CLICK HunterTrackingButtonTrackMechanicals:LeftButton" category="Hunter Tracking"/>
+    <Binding name="CLICK HunterTrackingButtonTrackUndead:LeftButton" category="Hunter Tracking"/>
+</Bindings>

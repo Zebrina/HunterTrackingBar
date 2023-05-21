@@ -1,0 +1,159 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
+	<Script file="HunterTrackingBarFrame.lua"/>
+	<CheckButton name="HunterTrackingButtonTemplate" parentArray="Buttons" inherits="SecureFrameTemplate, ActionButtonTemplate" frameStrata="MEDIUM" virtual="true">
+		<Size x="30" y="30"/>
+		<Layers>
+			<Layer level="OVERLAY">
+				<Texture parentKey="SpellHighlightTexture" atlas="bags-newitem" useAtlasSize="false" alphaMode="ADD" hidden="true">
+					<Size x="34" y="34"/>
+					<Anchors>
+						<Anchor point="CENTER"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+		</Layers>
+		<Animations>
+			<AnimationGroup parentKey="SpellHighlightAnim" looping="REPEAT">
+				<Alpha childKey="SpellHighlightTexture" smoothing="OUT" duration=".35" order="1" fromAlpha="0" toAlpha="1"/>
+				<Alpha childKey="SpellHighlightTexture" smoothing="IN" duration=".35" order="2" fromAlpha="1" toAlpha="0"/>
+			</AnimationGroup>
+		</Animations>
+		<Scripts>
+			<OnEvent>
+				HunterTrackingButton_OnEvent(self, event, ...);
+			</OnEvent>
+			<PreClick>
+                if (not self.setChecked) then
+				    self:SetChecked(false);
+                end
+			</PreClick>
+			<OnClick>
+				HunterTrackingButton_OnClick(self, button);
+			</OnClick>
+			<OnEnter>
+				HunterTrackingButton_OnEnter(self, motion);
+			</OnEnter>
+			<OnLeave>
+				HunterTrackingButton_OnLeave(self, motion);
+			</OnLeave>
+			<OnUpdate>
+				HunterTrackingButton_OnUpdate(self, elapsed);
+			</OnUpdate>
+		</Scripts>
+		<NormalTexture name="$parentNormalTexture2" file="Interface\Buttons\UI-Quickslot2">
+			<Size x="54" y="54"/>
+			<Anchors>
+				<Anchor point="CENTER" x="0" y="-1"/>
+			</Anchors>
+		</NormalTexture>
+	</CheckButton>
+	<Frame name="HunterTrackingBarFrame" parent="MainMenuBar" enableMouse="true" frameStrata="LOW" hidden="true">
+		<Size>
+			<AbsDimension x="509" y="43"/>
+		</Size>
+		<Anchors>
+			<Anchor point="BOTTOMLEFT" relativePoint="TOPLEFT" relativeTo="MultiBarBottomRightButton1">
+				<Offset>
+					<AbsDimension x="28" y="6"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Frames>
+			<CheckButton name="HunterTrackingButtonTrackBeasts" inherits="HunterTrackingButtonTemplate">
+				<Anchors>
+					<Anchor point="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="36" y="2"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+                <Scripts>
+        			<OnLoad>
+                        self.trackingName = "Track Beasts";
+                        self.spellID = 1494;
+        				HunterTrackingButton_OnLoad(self);
+        			</OnLoad>
+                </Scripts>
+			</CheckButton>
+			<CheckButton name="HunterTrackingButtonTrackDemons" inherits="HunterTrackingButtonTemplate">
+                <Scripts>
+        			<OnLoad>
+                        self.trackingName = "Track Demons";
+                        self.spellID = 19878;
+        				HunterTrackingButton_OnLoad(self);
+        			</OnLoad>
+                </Scripts>
+			</CheckButton>
+			<CheckButton name="HunterTrackingButtonTrackDragonkin" inherits="HunterTrackingButtonTemplate">
+                <Scripts>
+        			<OnLoad>
+                        self.trackingName = "Track Dragonkin";
+                        self.spellID = 19879;
+        				HunterTrackingButton_OnLoad(self);
+        			</OnLoad>
+                </Scripts>
+			</CheckButton>
+			<CheckButton name="HunterTrackingButtonTrackElementals" inherits="HunterTrackingButtonTemplate">
+                <Scripts>
+        			<OnLoad>
+                        self.trackingName = "Track Elementals";
+                        self.spellID = 19880;
+        				HunterTrackingButton_OnLoad(self);
+        			</OnLoad>
+                </Scripts>
+			</CheckButton>
+			<CheckButton name="HunterTrackingButtonTrackGiants" inherits="HunterTrackingButtonTemplate">
+                <Scripts>
+        			<OnLoad>
+                        self.trackingName = "Track Giants";
+                        self.spellID = 19882;
+        				HunterTrackingButton_OnLoad(self);
+        			</OnLoad>
+                </Scripts>
+			</CheckButton>
+            <CheckButton name="HunterTrackingButtonTrackHidden" inherits="HunterTrackingButtonTemplate">
+                <Scripts>
+        			<OnLoad>
+                        self.trackingName = "Track Hidden";
+                        self.spellID = 19885;
+        				HunterTrackingButton_OnLoad(self);
+        			</OnLoad>
+                </Scripts>
+			</CheckButton>
+			<CheckButton name="HunterTrackingButtonTrackHumanoids" inherits="HunterTrackingButtonTemplate">
+                <Scripts>
+        			<OnLoad>
+                        self.trackingName = "Track Humanoids";
+                        self.spellID = 19883;
+        				HunterTrackingButton_OnLoad(self);
+        			</OnLoad>
+                </Scripts>
+			</CheckButton>
+			<CheckButton name="HunterTrackingButtonTrackMechanicals" inherits="HunterTrackingButtonTemplate">
+                <Scripts>
+        			<OnLoad>
+                        self.trackingName = "Track Mechanicals";
+                        self.spellID = 229533;
+        				HunterTrackingButton_OnLoad(self);
+        			</OnLoad>
+                </Scripts>
+			</CheckButton>
+			<CheckButton name="HunterTrackingButtonTrackUndead" inherits="HunterTrackingButtonTemplate">
+                <Scripts>
+        			<OnLoad>
+                        self.trackingName = "Track Undead";
+                        self.spellID = 19884;
+        				HunterTrackingButton_OnLoad(self);
+        			</OnLoad>
+                </Scripts>
+			</CheckButton>
+		</Frames>
+		<Scripts>
+			<OnLoad function="HunterTrackingBarFrame_OnLoad"/>
+			<OnEvent function="HunterTrackingBarFrame_OnEvent"/>
+			<OnUpdate function="HunterTrackingBarFrame_OnUpdate"/>
+			<OnShow function="HunterTrackingBarFrame_OnShow"/>
+			<OnHide function="HunterTrackingBarFrame_OnHide"/>
+		</Scripts>
+	</Frame>
+</Ui>
