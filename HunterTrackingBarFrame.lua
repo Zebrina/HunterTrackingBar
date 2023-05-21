@@ -3,6 +3,8 @@ if (not IsPlayerHunter()) then
     return;
 end
 
+local IS_CLASSIC = (WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE);
+
 HUNTERTRACKINGBAR_YPOS = 89;
 HUNTERTRACKINGBAR_XPOS = 236;
 
@@ -23,11 +25,15 @@ end
 function HunterTrackingBarFrame_OnLoad(self)
 	--if (IsAddOnLoaded("FastEquipMenu")) then
 	--	self:SetPoint("BOTTOMLEFT", "InventoryEquipmentBar", "TOPLEFT", 75, 5.5);
-    if (IsAddOnLoaded("ClassicUI")) then
-        self:SetPoint("BOTTOMLEFT", "MultiBarBottomRightButton1", "TOPLEFT", 28, 5.5);
-    else
-        self:SetPoint("BOTTOMLEFT", "MultiBarBottomLeftButton11", "TOPLEFT", 28, 5.5);
-    end
+	if (IS_CLASSIC) then
+		self:SetPoint("BOTTOMLEFT", "MultiBarBottomRightButton1", "TOPLEFT", 28, 3);
+	else
+		if (IsAddOnLoaded("ClassicUI")) then
+			self:SetPoint("BOTTOMLEFT", "MultiBarBottomRightButton1", "TOPLEFT", 28, 5.5);
+		else
+			self:SetPoint("BOTTOMLEFT", "MultiBarBottomLeftButton11", "TOPLEFT", 28, 5.5);
+		end
+	end
     
     for i = 2, getn(self.Buttons) do
         local button = self.Buttons[i];
@@ -37,17 +43,15 @@ function HunterTrackingBarFrame_OnLoad(self)
 	HunterTrackingBarFrame_Update(self);
     self:RegisterEvent("PLAYER_ENTERING_WORLD");
     self:RegisterEvent("MINIMAP_UPDATE_TRACKING");
-
-    if (IsPlayerHunter()) then
-    	ShowHunterTrackingBar();
-    else
-        -- TODO: Add a red chat message telling player to disable addon.
-    end
 end
 
 function HunterTrackingBarFrame_OnEvent(self, event, ...)
     if (event == "PLAYER_ENTERING_WORLD") then
         HunterTrackingBarFrame_Update(self);
+		if (IsPlayerHunter()) then
+			ShowHunterTrackingBar();
+		end
+		print("PLAYER_ENTERING_WORLD")
     elseif (event == "MINIMAP_UPDATE_TRACKING") then
         HunterTrackingBarFrame_Update(self);
     end
@@ -58,7 +62,8 @@ end
 
 function HunterTrackingBarFrame_Update(self)
     HunterTrackingBarFrame_ForEachButton(self, HunterTrackingButton_Update);
-    if (true) then
+    --[[
+	if (true) then
         return;
     end
 	local petActionButton, petActionIcon;
@@ -89,13 +94,16 @@ function HunterTrackingBarFrame_Update(self)
 			petActionButton:SetNormalTexture("Interface\\Buttons\\UI-Quickslot");
 		end
 	end
-	--HunterTrackingBarFrame_UpdateCooldowns(self);
+	]]
+	if (IS_CLASSIC) then
+		HunterTrackingBarFrame_UpdateCooldowns(self);
+	end
 end
 
 function HunterTrackingBarFrame_UpdateCooldowns(self)
-    HunterTrackingBarFrame_ForEachButton(self, function(button)
-        local start, duration, enable = GetHunterTrackingCooldown(i);
-		CooldownFrame_Set(cooldown, start, duration, enable);
+    HunterTrackingBarFrame_ForEachButton(self, function(button, i)
+        local start, duration, enable = GetSpellCooldown(button.spellID);
+		CooldownFrame_Set(button.cooldown, start, duration, enable);
 
 		if (GameTooltip:GetOwner() == button) then
 			HunterTrackingButton_OnEnter(button);
@@ -106,6 +114,7 @@ end
 function ShowHunterTrackingBar(doNotSlide)
     --HunterTrackingBarFrame:SetPoint("LEFT", PetActionBarFrame, "RIGHT", 50, 0);
     HunterTrackingBarFrame:Show();
+	--[[
     if (true) then
         return;
     end
@@ -120,11 +129,12 @@ function ShowHunterTrackingBar(doNotSlide)
 		end
 		UIParent_ManageFramePositions();
 	end
+	]]
 end
 
 function HideHunterTrackingBar()
 	if (HunterTrackingBarFrame:IsShown()) then
-		if ( MainMenuBar.busy or UnitHasVehicleUI("player") ) then
+		if (MainMenuBar.busy or UnitHasVehicleUI("player") ) then
 			HunterTrackingBarFrame:SetPoint("TOPLEFT", HunterTrackingBarFrame:GetParent(), "BOTTOMLEFT", HUNTERTRACKINGBAR_XPOS, 0);
 			HunterTrackingBarFrame.state = "bottom";
 			HunterTrackingBarFrame:Hide();
@@ -135,6 +145,11 @@ function HideHunterTrackingBar()
 end
 
 function HunterTrackingButton_OnLoad(self)
+	if (self.noClassic and IS_CLASSIC) then
+		self:Hide();
+		return;
+	end
+
     _G["BINDING_NAME_CLICK "..self:GetName()..":LeftButton"] = "Toggle "..self.trackingName;
 
 	self.HotKey:ClearAllPoints();
@@ -142,6 +157,13 @@ function HunterTrackingButton_OnLoad(self)
 
 	self:RegisterForClicks("AnyUp");
 	self:RegisterEvent("UPDATE_BINDINGS");
+
+	if (IS_CLASSIC) then
+		self:SetAttribute("type", "spell");
+		self:SetAttribute("spell", self.trackingName);
+	else
+		self:SetScript("OnClick", HunterTrackingButton_OnClick);
+	end
 
     local cooldown = _G[self:GetName().."Cooldown"];
 	cooldown:ClearAllPoints();
@@ -164,10 +186,10 @@ function HunterTrackingButton_OnEvent(self, event, ...)
 end
 
 function HunterTrackingButton_OnClick(self, button)
-    local index, _, active = GetTrackingInfoByName(self.trackingName);
-    if (index) then
-        SetTracking(index, not active);
-    end
+	local index, _, active = GetTrackingInfoByName(self.trackingName);
+	if (index) then
+		C_Minimap.SetTracking(index, not active);
+	end
 end
 
 function HunterTrackingButton_OnEnter(self)
@@ -187,13 +209,13 @@ function HunterTrackingButton_OnUpdate(self, elapsed)
 end
 
 function HunterTrackingButton_UpdateIcon(self)
-    local _, texture, active = GetTrackingInfoByName(self.trackingName);
-    if (self.setTexture and active) then
-        self.icon:SetTexture(HUNTER_TRACKING_ACTIVE_TEXTURE);
-    else
-        self.icon:SetTexture(texture);
-    end
-    self:SetChecked(self.setChecked and active);
+	local _, texture, active = GetTrackingInfoByName(self.trackingName);
+	if (self.setTexture and active) then
+		self.icon:SetTexture(HUNTER_TRACKING_ACTIVE_TEXTURE);
+	else
+		self.icon:SetTexture(texture);
+	end
+	self:SetChecked(self.setChecked and active);
 end
 
 function HunterTrackingButton_UpdateHotkey(self)

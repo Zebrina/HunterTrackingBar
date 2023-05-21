@@ -3,8 +3,8 @@ function IsPlayerHunter()
 end
 
 function GetTrackingInfoByName(trackingName)
-    for i = 1, GetNumTrackingTypes() do
-        local name, texture, active = GetTrackingInfo(i);
+    for i = 1, C_Minimap.GetNumTrackingTypes() do
+        local name, texture, active = C_Minimap.GetTrackingInfo(i);
         if (name == trackingName) then
             return i, texture, active;
         end

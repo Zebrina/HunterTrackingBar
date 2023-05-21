@@ -1,4 +1,4 @@
-## Interface: 80300
+## Interface: 30401
 ## Title: Hunter Tracking Bar
 ## Version: 1.0.0
 ## Author: Zebrina
