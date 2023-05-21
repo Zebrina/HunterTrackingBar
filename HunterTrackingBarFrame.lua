@@ -40,9 +40,13 @@ function HunterTrackingBarFrame_OnLoad(self)
         --button:ClearAllPoints();
         button:SetPoint("LEFT", self.Buttons[i - 1], "RIGHT", 8, 0);
     end
+
 	HunterTrackingBarFrame_Update(self);
+	HunterTrackingBarFrame_UpdateButtonLayout(self);
+
     self:RegisterEvent("PLAYER_ENTERING_WORLD");
     self:RegisterEvent("MINIMAP_UPDATE_TRACKING");
+	self:RegisterEvent("LEARNED_SPELL_IN_TAB");
 	--self:RegisterEvent("ACTIONBAR_UPDATE_COOLDOWN");
 end
 
@@ -52,12 +56,13 @@ function HunterTrackingBarFrame_OnEvent(self, event, ...)
 		if (IsPlayerHunter()) then
 			ShowHunterTrackingBar();
 		end
-		print("PLAYER_ENTERING_WORLD")
     elseif (event == "MINIMAP_UPDATE_TRACKING") then
         HunterTrackingBarFrame_Update(self);
 		if (IS_CLASSIC) then
 			HunterTrackingBarFrame_UpdateCooldowns(self);
 		end
+	elseif (event == "LEARNED_SPELL_IN_TAB") then
+		HunterTrackingBarFrame_UpdateButtonLayout(self);
     end
 end
 
@@ -119,6 +124,36 @@ function HunterTrackingBarFrame_UpdateCooldowns(self)
     end);
 end
 
+-- /run HunterTrackingBarFrame_UpdateButtonLayout(HunterTrackingBarFrame)
+function HunterTrackingBarFrame_UpdateButtonLayout(self)
+	local previousButton;
+	HunterTrackingBarFrame_ForEachButton(self, function(button, i)
+		if (HunterTrackingButton_ShouldShow(button)) then
+			local point, relativeTo, relativePoint, offsetX, offsetY = button:GetPoint();
+			if (previousButton == nil) then
+				point = "BOTTOMLEFT";
+				relativeTo = self;
+				relativePoint = "BOTTOMLEFT";
+				offsetX = 36;
+				offsetY = 2;
+			else
+				point = "LEFT";
+				relativeTo = previousButton;
+				relativePoint = "RIGHT";
+				offsetX = 8;
+				offsetY = 0;
+			end
+
+			previousButton = button;
+
+			button:SetPoint(point, relativeTo, relativePoint, offsetX, offsetY);
+			button:Show();
+		else
+			button:Hide();
+		end
+	end);
+end
+
 function ShowHunterTrackingBar(doNotSlide)
     --HunterTrackingBarFrame:SetPoint("LEFT", PetActionBarFrame, "RIGHT", 50, 0);
     HunterTrackingBarFrame:Show();
@@ -153,11 +188,6 @@ function HideHunterTrackingBar()
 end
 
 function HunterTrackingButton_OnLoad(self)
-	if (self.noClassic and IS_CLASSIC) then
-		self:Hide();
-		return;
-	end
-
     _G["BINDING_NAME_CLICK "..self:GetName()..":LeftButton"] = "Toggle "..self.trackingName;
 
 	self.HotKey:ClearAllPoints();
@@ -179,7 +209,7 @@ function HunterTrackingButton_OnLoad(self)
 	cooldown:SetHeight(33);
 	cooldown:SetPoint("CENTER", self, "CENTER", -2, -1);
 
-    self.setTexture = false;
+    self.setTexture = true;
     self.setChecked = true;
 
 	HunterTrackingButton_UpdateHotkey(self);
@@ -216,9 +246,16 @@ end
 function HunterTrackingButton_OnUpdate(self, elapsed)
 end
 
+function HunterTrackingButton_ShouldShow(self)
+	if (self.noClassic and IS_CLASSIC) then
+		return false;
+	end
+	return IsSpellKnown(self.spellID);
+end
+
 function HunterTrackingButton_UpdateIcon(self)
 	local _, texture, active = GetTrackingInfoByName(self.trackingName);
-	if (active) then
+	if (self.setTexture and active) then
 		self.icon:SetTexture(HUNTER_TRACKING_ACTIVE_TEXTURE);
 	else
 		self.icon:SetTexture(texture);

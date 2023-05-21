@@ -121,21 +121,21 @@
         			</OnLoad>
                 </Scripts>
 			</CheckButton>
-			<CheckButton name="HunterTrackingButtonTrackUndead" inherits="HunterTrackingButtonTemplate">
-                <Scripts>
-        			<OnLoad>
-                        self.trackingName = "Track Undead";
-                        self.spellID = 19884;
-        				HunterTrackingButton_OnLoad(self);
-        			</OnLoad>
-                </Scripts>
-			</CheckButton>
 			<CheckButton name="HunterTrackingButtonTrackMechanicals" inherits="HunterTrackingButtonTemplate">
                 <Scripts>
         			<OnLoad>
                         self.trackingName = "Track Mechanicals";
                         self.spellID = 229533;
 						self.noClassic = true;
+        				HunterTrackingButton_OnLoad(self);
+        			</OnLoad>
+                </Scripts>
+			</CheckButton>
+			<CheckButton name="HunterTrackingButtonTrackUndead" inherits="HunterTrackingButtonTemplate">
+                <Scripts>
+        			<OnLoad>
+                        self.trackingName = "Track Undead";
+                        self.spellID = 19884;
         				HunterTrackingButton_OnLoad(self);
         			</OnLoad>
                 </Scripts>
