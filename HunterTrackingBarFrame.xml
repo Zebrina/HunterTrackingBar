@@ -22,11 +22,6 @@
 			<OnEvent>
 				HunterTrackingButton_OnEvent(self, event, ...);
 			</OnEvent>
-			<PreClick>
-                if (not self.setChecked) then
-				    self:SetChecked(false);
-                end
-			</PreClick>
 			<OnEnter>
 				HunterTrackingButton_OnEnter(self, motion);
 			</OnEnter>

@@ -43,6 +43,7 @@ function HunterTrackingBarFrame_OnLoad(self)
 	HunterTrackingBarFrame_Update(self);
     self:RegisterEvent("PLAYER_ENTERING_WORLD");
     self:RegisterEvent("MINIMAP_UPDATE_TRACKING");
+	--self:RegisterEvent("ACTIONBAR_UPDATE_COOLDOWN");
 end
 
 function HunterTrackingBarFrame_OnEvent(self, event, ...)
@@ -54,10 +55,16 @@ function HunterTrackingBarFrame_OnEvent(self, event, ...)
 		print("PLAYER_ENTERING_WORLD")
     elseif (event == "MINIMAP_UPDATE_TRACKING") then
         HunterTrackingBarFrame_Update(self);
+		if (IS_CLASSIC) then
+			HunterTrackingBarFrame_UpdateCooldowns(self);
+		end
     end
 end
 
 function HunterTrackingBarFrame_OnUpdate(self, elapsed)
+	if (self.updateCooldowns) then
+		HunterTrackingBarFrame_Update(self);
+	end
 end
 
 function HunterTrackingBarFrame_Update(self)
@@ -95,12 +102,13 @@ function HunterTrackingBarFrame_Update(self)
 		end
 	end
 	]]
-	if (IS_CLASSIC) then
-		HunterTrackingBarFrame_UpdateCooldowns(self);
-	end
 end
 
 function HunterTrackingBarFrame_UpdateCooldowns(self)
+	self.updateCooldowns = C_Timer.NewTimer(1.5, function()
+		self.updateCooldowns = nil;
+	end);
+
     HunterTrackingBarFrame_ForEachButton(self, function(button, i)
         local start, duration, enable = GetSpellCooldown(button.spellID);
 		CooldownFrame_Set(button.cooldown, start, duration, enable);
@@ -210,7 +218,7 @@ end
 
 function HunterTrackingButton_UpdateIcon(self)
 	local _, texture, active = GetTrackingInfoByName(self.trackingName);
-	if (self.setTexture and active) then
+	if (active) then
 		self.icon:SetTexture(HUNTER_TRACKING_ACTIVE_TEXTURE);
 	else
 		self.icon:SetTexture(texture);
