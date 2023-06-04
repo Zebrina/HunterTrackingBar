@@ -1,8 +1,3 @@
-if (not IsPlayerHunter()) then
-    -- TODO: Add a red chat message telling player to disable addon.
-    return;
-end
-
 local IS_CLASSIC = (WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE);
 
 HUNTERTRACKINGBAR_YPOS = 89;
