@@ -41,9 +41,6 @@ function HunterTrackingBarFrame_OnLoad(self)
         button:SetPoint("LEFT", self.Buttons[i - 1], "RIGHT", 8, 0);
     end
 
-	HunterTrackingBarFrame_Update(self);
-	HunterTrackingBarFrame_UpdateButtonLayout(self);
-
     self:RegisterEvent("PLAYER_ENTERING_WORLD");
     self:RegisterEvent("MINIMAP_UPDATE_TRACKING");
 	self:RegisterEvent("LEARNED_SPELL_IN_TAB");
@@ -52,7 +49,8 @@ end
 
 function HunterTrackingBarFrame_OnEvent(self, event, ...)
     if (event == "PLAYER_ENTERING_WORLD") then
-        HunterTrackingBarFrame_Update(self);
+		HunterTrackingBarFrame_UpdateButtonLayout(self);
+		HunterTrackingBarFrame_Update(self);
 		if (IsPlayerHunter()) then
 			ShowHunterTrackingBar();
 		end
