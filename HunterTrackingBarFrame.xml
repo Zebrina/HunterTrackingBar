@@ -140,6 +140,33 @@
         			</OnLoad>
                 </Scripts>
 			</CheckButton>
+			<CheckButton name="HunterTrackingButtonFindHerbs" inherits="HunterTrackingButtonTemplate">
+                <Scripts>
+        			<OnLoad>
+                        self.trackingName = "Find Herbs";
+                        self.spellID = 2383;
+        				HunterTrackingButton_OnLoad(self);
+        			</OnLoad>
+                </Scripts>
+			</CheckButton>
+			<CheckButton name="HunterTrackingButtonFindMinerals" inherits="HunterTrackingButtonTemplate">
+                <Scripts>
+        			<OnLoad>
+                        self.trackingName = "Find Minerals";
+                        self.spellID = 2580;
+        				HunterTrackingButton_OnLoad(self);
+        			</OnLoad>
+                </Scripts>
+			</CheckButton>
+			<CheckButton name="HunterTrackingButtonFindFish" inherits="HunterTrackingButtonTemplate">
+                <Scripts>
+        			<OnLoad>
+                        self.trackingName = "Find Fish";
+                        self.spellID = 43308;
+        				HunterTrackingButton_OnLoad(self);
+        			</OnLoad>
+                </Scripts>
+			</CheckButton>
 		</Frames>
 		<Scripts>
 			<OnLoad function="HunterTrackingBarFrame_OnLoad"/>
