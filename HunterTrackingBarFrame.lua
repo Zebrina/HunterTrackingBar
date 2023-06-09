@@ -38,6 +38,7 @@ function HunterTrackingBarFrame_OnLoad(self)
 
     self:RegisterEvent("PLAYER_ENTERING_WORLD");
     self:RegisterEvent("MINIMAP_UPDATE_TRACKING");
+	self:RegisterEvent("PLAYER_TARGET_CHANGED");
 	self:RegisterEvent("LEARNED_SPELL_IN_TAB");
 	--self:RegisterEvent("ACTIONBAR_UPDATE_COOLDOWN");
 end
@@ -54,6 +55,8 @@ function HunterTrackingBarFrame_OnEvent(self, event, ...)
 		if (IS_CLASSIC) then
 			HunterTrackingBarFrame_UpdateCooldowns(self);
 		end
+	elseif (event == "PLAYER_TARGET_CHANGED") then
+        HunterTrackingBarFrame_Update(self);
 	elseif (event == "LEARNED_SPELL_IN_TAB") then
 		HunterTrackingBarFrame_UpdateButtonLayout(self);
     end
@@ -248,12 +251,22 @@ end
 
 function HunterTrackingButton_UpdateIcon(self)
 	local _, texture, active = GetTrackingInfoByName(self.trackingName);
+
 	if (self.setTexture and active) then
 		self.icon:SetTexture(HUNTER_TRACKING_ACTIVE_TEXTURE);
 	else
 		self.icon:SetTexture(texture);
 	end
 	self:SetChecked(self.setChecked and active);
+
+	local trackingType = self.trackingType;
+	if (trackingType) then
+		if (not active and UnitCanAttack("player", "target") and UnitCreatureType("target") == trackingType) then
+			ActionButton_ShowOverlayGlow(self);
+		else
+			ActionButton_HideOverlayGlow(self);
+		end
+	end
 end
 
 function HunterTrackingButton_UpdateHotkey(self)

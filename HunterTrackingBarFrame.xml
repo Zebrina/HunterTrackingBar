@@ -63,6 +63,7 @@
         			<OnLoad>
                         self.trackingName = "Track Beasts";
                         self.spellID = 1494;
+						self.trackingType = "Beast";
         				HunterTrackingButton_OnLoad(self);
         			</OnLoad>
                 </Scripts>
@@ -72,6 +73,7 @@
         			<OnLoad>
                         self.trackingName = "Track Demons";
                         self.spellID = 19878;
+						self.trackingType = "Demon";
         				HunterTrackingButton_OnLoad(self);
         			</OnLoad>
                 </Scripts>
@@ -81,6 +83,7 @@
         			<OnLoad>
                         self.trackingName = "Track Dragonkin";
                         self.spellID = 19879;
+						self.trackingType = "Dragonkin";
         				HunterTrackingButton_OnLoad(self);
         			</OnLoad>
                 </Scripts>
@@ -90,6 +93,7 @@
         			<OnLoad>
                         self.trackingName = "Track Elementals";
                         self.spellID = 19880;
+						self.trackingType = "Elemental";
         				HunterTrackingButton_OnLoad(self);
         			</OnLoad>
                 </Scripts>
@@ -99,6 +103,7 @@
         			<OnLoad>
                         self.trackingName = "Track Giants";
                         self.spellID = 19882;
+						self.trackingType = "Giant";
         				HunterTrackingButton_OnLoad(self);
         			</OnLoad>
                 </Scripts>
@@ -117,6 +122,7 @@
         			<OnLoad>
                         self.trackingName = "Track Humanoids";
                         self.spellID = 19883;
+						self.trackingType = "Humanoid";
         				HunterTrackingButton_OnLoad(self);
         			</OnLoad>
                 </Scripts>
@@ -126,6 +132,7 @@
         			<OnLoad>
                         self.trackingName = "Track Mechanicals";
                         self.spellID = 229533;
+						self.trackingType = "Mechanical";
 						self.noClassic = true;
         				HunterTrackingButton_OnLoad(self);
         			</OnLoad>
@@ -136,6 +143,27 @@
         			<OnLoad>
                         self.trackingName = "Track Undead";
                         self.spellID = 19884;
+						self.trackingType = "Undead";
+        				HunterTrackingButton_OnLoad(self);
+        			</OnLoad>
+                </Scripts>
+			</CheckButton>
+			<CheckButton name="HunterTrackingButtonSenseDemon" inherits="HunterTrackingButtonTemplate">
+                <Scripts>
+        			<OnLoad>
+                        self.trackingName = "Sense Demons";
+                        self.spellID = 5500;
+						--self.trackingType = "Demon";
+        				HunterTrackingButton_OnLoad(self);
+        			</OnLoad>
+                </Scripts>
+			</CheckButton>
+			<CheckButton name="HunterTrackingButtonSenseDemon" inherits="HunterTrackingButtonTemplate">
+                <Scripts>
+        			<OnLoad>
+                        self.trackingName = "Sense Undead";
+                        self.spellID = 5502;
+						self.trackingType = "Undead";
         				HunterTrackingButton_OnLoad(self);
         			</OnLoad>
                 </Scripts>
