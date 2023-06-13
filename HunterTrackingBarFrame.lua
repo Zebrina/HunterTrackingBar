@@ -261,7 +261,7 @@ function HunterTrackingButton_UpdateIcon(self)
 
 	local trackingType = self.trackingType;
 	if (trackingType) then
-		if (not active and UnitCanAttack("player", "target") and UnitCreatureType("target") == trackingType) then
+		if (not active and UnitCanAttack("player", "target") and UnitCreatureType("target") == trackingType) and not UnitIsDead("target") then
 			ActionButton_ShowOverlayGlow(self);
 		else
 			ActionButton_HideOverlayGlow(self);
