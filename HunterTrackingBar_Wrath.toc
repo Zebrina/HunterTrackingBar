@@ -3,9 +3,10 @@
 ## Version: 1.0.0
 ## Author: Zebrina
 ## Notes: A bar for hunters to quickly toggle tracking types.
-## OptionalDeps: ClassicUI, Masque
+## OptionalDeps: Masque
 
 Utility.lua
-HunterTrackingBarFrame.xml
+HunterTrackingBarFrame.lua
+HunterTrackingBarFrame_Classic.xml
 SlashHandler.lua
 Masque.lua

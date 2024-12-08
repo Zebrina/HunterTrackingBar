@@ -1,0 +1,218 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
+	<CheckButton name="HunterTrackingButtonTemplate" parentArray="Buttons" inherits="QuickKeybindButtonTemplate, SecureActionButtonTemplate, ActionButtonTemplate" mixin="HunterTrackingButtonMixin" frameStrata="MEDIUM" virtual="true">
+		<Size x="30" y="30"/>
+		<Layers>
+			<Layer level="OVERLAY">
+				<Texture parentKey="SpellHighlightTexture" atlas="bags-newitem" useAtlasSize="false" alphaMode="ADD" hidden="true">
+					<Size x="38" y="38"/>
+					<Anchors>
+						<Anchor point="CENTER"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+		</Layers>
+		<Animations>
+			<AnimationGroup parentKey="SpellHighlightAnim" looping="REPEAT">
+				<Alpha childKey="SpellHighlightTexture" smoothing="OUT" duration=".35" order="1" fromAlpha="0" toAlpha="1"/>
+				<Alpha childKey="SpellHighlightTexture" smoothing="IN" duration=".35" order="2" fromAlpha="1" toAlpha="0"/>
+			</AnimationGroup>
+		</Animations>
+		<Scripts>
+			<OnEvent method="OnEvent" inherit="append"/>
+			<OnEnter method="OnEnter" inherit="append"/>
+			<OnLeave method="OnLeave" inherit="append"/>
+		</Scripts>
+	</CheckButton>
+	<Frame name="HunterTrackingBarFrame" parent="UIParent" inherits="EditModeActionBarTemplate" mixin="HunterTrackingBarMixin" enableMouse="true" frameStrata="LOW" frameLevel="70" fixedFrameLevel="true" hidden="false">
+		<Size>
+			<AbsDimension x="509" y="43"/>
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER" relativeTo="UIParent" relativePoint="CENTER" x="0" y="520"/>
+		</Anchors>
+		<Frames>
+			<CheckButton name="HunterTrackingButtonTrackBeasts" inherits="HunterTrackingButtonTemplate">
+                <Scripts>
+        			<OnLoad>
+                        self.trackingName = "Track Beasts"
+                        self.spellID = 1494
+						self.trackingType = "Beast"
+        				self:OnLoad()
+        			</OnLoad>
+                </Scripts>
+			</CheckButton>
+			<CheckButton name="HunterTrackingButtonTrackHumanoids" inherits="HunterTrackingButtonTemplate">
+                <Scripts>
+        			<OnLoad>
+                        self.trackingName = "Track Humanoids"
+                        self.spellID = 19883
+						self.trackingType = "Humanoid"
+        				self:OnLoad()
+        			</OnLoad>
+                </Scripts>
+			</CheckButton>
+			<CheckButton name="HunterTrackingButtonTrackUndead" inherits="HunterTrackingButtonTemplate">
+                <Scripts>
+        			<OnLoad>
+                        self.trackingName = "Track Undead"
+                        self.spellID = 19884
+						self.trackingType = "Undead"
+        				self:OnLoad()
+        			</OnLoad>
+                </Scripts>
+			</CheckButton>
+            <CheckButton name="HunterTrackingButtonTrackHidden" inherits="HunterTrackingButtonTemplate">
+                <Scripts>
+        			<OnLoad>
+                        self.trackingName = "Track Hidden"
+                        self.spellID = 19885
+        				self:OnLoad()
+        			</OnLoad>
+                </Scripts>
+			</CheckButton>
+			<CheckButton name="HunterTrackingButtonTrackElementals" inherits="HunterTrackingButtonTemplate">
+                <Scripts>
+        			<OnLoad>
+                        self.trackingName = "Track Elementals"
+                        self.spellID = 19880
+						self.trackingType = "Elemental"
+        				self:OnLoad()
+        			</OnLoad>
+                </Scripts>
+			</CheckButton>
+			<CheckButton name="HunterTrackingButtonTrackDemons" inherits="HunterTrackingButtonTemplate">
+                <Scripts>
+        			<OnLoad>
+                        self.trackingName = "Track Demons"
+                        self.spellID = 19878
+						self.trackingType = "Demon"
+        				self:OnLoad()
+        			</OnLoad>
+                </Scripts>
+			</CheckButton>
+			<CheckButton name="HunterTrackingButtonTrackGiants" inherits="HunterTrackingButtonTemplate">
+                <Scripts>
+        			<OnLoad>
+                        self.trackingName = "Track Giants"
+                        self.spellID = 19882
+						self.trackingType = "Giant"
+        				self:OnLoad()
+        			</OnLoad>
+                </Scripts>
+			</CheckButton>
+			<CheckButton name="HunterTrackingButtonTrackDragonkin" inherits="HunterTrackingButtonTemplate">
+                <Scripts>
+        			<OnLoad>
+                        self.trackingName = "Track Dragonkin"
+                        self.spellID = 19879
+						self.trackingType = "Dragonkin"
+        				self:OnLoad()
+        			</OnLoad>
+                </Scripts>
+			</CheckButton>
+			<!-- Added in Legion -->
+			<CheckButton name="HunterTrackingButtonTrackMechanicals" inherits="HunterTrackingButtonTemplate">
+                <Scripts>
+        			<OnLoad>
+                        self.trackingName = "Track Mechanicals"
+                        self.spellID = 229533
+						self.trackingType = "Mechanical"
+        				self:OnLoad()
+        			</OnLoad>
+                </Scripts>
+			</CheckButton>
+			<!-- Paladin -->
+			<CheckButton name="HunterTrackingButtonSenseUndead" inherits="HunterTrackingButtonTemplate">
+                <Scripts>
+        			<OnLoad>
+						-- Paladin
+                        self.trackingName = "Sense Undead"
+                        self.spellID = 5502
+						--self.trackingType = "Undead"
+        				self:OnLoad()
+        			</OnLoad>
+                </Scripts>
+			</CheckButton>
+			<!-- Druid -->
+			<CheckButton name="HunterTrackingButtonTrackHumanoids2" inherits="HunterTrackingButtonTemplate">
+                <Scripts>
+        			<OnLoad>
+                        self.trackingName = "Track Humanoids"
+                        self.spellID = 5225
+						--self.trackingType = "Humanoid"
+						self.altIconTexture = 135942
+        				self:OnLoad()
+        			</OnLoad>
+                </Scripts>
+			</CheckButton>
+			<!-- Druid - Added in Legion -->
+			<CheckButton name="HunterTrackingButtonTrackBeasts2" inherits="HunterTrackingButtonTemplate">
+                <Scripts>
+        			<OnLoad>
+                        self.trackingName = "Track Beasts"
+                        self.spellID = 210065
+						self.trackingType = "Beast"
+        				self:OnLoad()
+        			</OnLoad>
+                </Scripts>
+			</CheckButton>
+			<!-- Pokemon -->
+			<!--
+			<CheckButton name="HunterTrackingButtonTrackPets" inherits="HunterTrackingButtonTemplate">
+                <Scripts>
+        			<OnLoad>
+                        self.trackingName = "Track Pets"
+                        self.spellID = 122026
+        				self:OnLoad()
+        			</OnLoad>
+                </Scripts>
+			</CheckButton>
+			-->
+			<!-- Professions -->
+			<!--
+			<CheckButton name="HunterTrackingButtonFindHerbs" inherits="HunterTrackingButtonTemplate">
+                <Scripts>
+        			<OnLoad>
+                        self.trackingName = "Find Herbs"
+                        self.spellID = 2383
+        				self:OnLoad()
+        			</OnLoad>
+                </Scripts>
+			</CheckButton>
+			<CheckButton name="HunterTrackingButtonFindMinerals" inherits="HunterTrackingButtonTemplate">
+                <Scripts>
+        			<OnLoad>
+                        self.trackingName = "Find Minerals"
+                        self.spellID = 2580
+        				self:OnLoad()
+        			</OnLoad>
+                </Scripts>
+			</CheckButton>
+			-->
+			<!--
+			<CheckButton name="HunterTrackingButtonFindFish" inherits="HunterTrackingButtonTemplate">
+                <Scripts>
+        			<OnLoad>
+                        self.trackingName = "Find Fish"
+                        self.spellID = 43308
+        				self:OnLoad()
+        			</OnLoad>
+                </Scripts>
+			</CheckButton>
+			-->
+		</Frames>
+		<KeyValues>
+			<KeyValue key="isHorizontal" value="true" type="boolean"/>
+			<KeyValue key="numRows" value="1" type="number"/>
+			<KeyValue key="addButtonsToRight" value="true" type="boolean"/>
+			<KeyValue key="addButtonsToTop" value="true" type="boolean"/>
+			<KeyValue key="systemNameString" value="HUD_EDIT_MODE_HUNTER_TRACKING_BAR_LABEL" type="global"/>
+			<KeyValue key="defaultHideSelection" value="false" type="boolean"/>
+		</KeyValues>
+		<Scripts>
+			<OnLoad method="OnLoad"/>
+			<OnEvent method="OnEvent" inherit="append"/>
+			<OnUpdate method="OnUpdate" inherit="append"/>
+		</Scripts>
+	</Frame>
+</Ui>

@@ -1,0 +1,15 @@
+## Interface: 110005
+## Title: Hunter Tracking Bar
+## Version: 1.0.0
+## Author: Zebrina
+## Notes: A bar for hunters to quickly toggle tracking types.
+## IconTexture: 132328
+## OptionalDeps: ClassicUI, Masque
+## SavedVariables: HunterTrackingBarSavedSystemInfo
+
+Utility.lua
+HunterTrackingBarFrame.lua
+HunterTrackingBarFrame_EditMode.lua
+HunterTrackingBarFrame_Mainline.xml
+SlashHandler.lua
+Masque.lua
