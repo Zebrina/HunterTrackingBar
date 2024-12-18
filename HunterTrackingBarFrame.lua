@@ -3,9 +3,11 @@ local IS_WRATH = (WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC)
 local IS_CATACLYSM = (WOW_PROJECT_ID == WOW_PROJECT_CATACLYSM_CLASSIC)
 local IS_PRE_CATACLYSM = (WOW_PROJECT_ID == WOW_PROJECT_CLASSIC) or (WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC) or IS_WRATH
 
-local IsAddOnLoaded = IsAddOnLoaded or C_AddOns.IsAddOnLoaded
-local GetSpellInfo = GetSpellInfo or C_Spell.GetSpellInfo
+local IsAddOnLoaded = _G.IsAddOnLoaded or C_AddOns.IsAddOnLoaded
+local GetSpellInfo = _G.GetSpellInfo or C_Spell.GetSpellInfo
 if (IS_RETAIL) then
+	-- Wrapper for GetSpellInfo to make it behave in retail as it does in classic.
+	-- name, rank, icon, castTime, minRange, maxRange, spellID, originalIcon = GetSpellInfo(spellOrIndex, bookType)
 	GetSpellInfo = function(spellOrIndex, bookType)
 		local spellInfo = C_Spell.GetSpellInfo(spellOrIndex, bookType)
 		if (spellInfo == nil) then
@@ -78,9 +80,11 @@ function HunterTrackingBarMixin:OnEvent(event, ...)
 	if (event == "PLAYER_ENTERING_WORLD") then
 		self:UpdateButtonLayout()
 		self:Update()
-		self:UpdateSystem(self:GetSavedSystemInfo())
-		if (self.requireLayoutInfoUpdate) then
-			C_Timer.NewTimer(0.5, function() self:UpdatePositionAnchorInfo() end)
+		if (IS_RETAIL) then
+			self:UpdateSystem(self:GetSavedSystemInfo())
+			if (self.requireLayoutInfoUpdate) then
+				C_Timer.NewTimer(0.5, function() self:UpdatePositionAnchorInfo() end)
+			end
 		end
     elseif (event == "MINIMAP_UPDATE_TRACKING") then
         self:Update()
@@ -144,8 +148,9 @@ function HunterTrackingBarMixin:UpdateButtonLayout()
 		self:UpdateShownButtons()
 		self:UpdateGridLayout()
 	else
-
---[[ TODO 
+		
+-- TODO
+--[[
 		self:ClearAllPoints()
 		self:SetPoint("BOTTOMLEFT", "MultiBarBottomRightButton1", "TOPLEFT", 28, 3)
 	
@@ -244,10 +249,10 @@ function HunterTrackingButtonMixin:OnLoad()
 	self:RegisterEvent("UPDATE_BINDINGS")
 
 	if (IS_PRE_CATACLYSM) then
-		self:SetAttribute("type", "spell")
+		--self:SetAttribute("type", "spell")
 		self:SetAttribute("spell", self.trackingName)
 	else
-		self:SetScript("OnClick", self.OnClick)
+		--self:SetScript("OnClick", self.OnClick)
 	end
 	
 	if (not IS_RETAIL) then

@@ -1,5 +1,8 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
 	<CheckButton name="HunterTrackingButtonTemplate" parentArray="Buttons" inherits="SecureActionButtonTemplate, ActionButtonTemplate" mixin="HunterTrackingButtonMixin" frameStrata="MEDIUM" virtual="true">
+		<Attributes>
+			<Attribute name="type" value="spell"/>
+		</Attributes>
 		<Size x="30" y="30"/>
 		<Layers>
 			<Layer level="OVERLAY">
@@ -23,7 +26,7 @@
 			<OnLeave method="OnLeave" inherit="append"/>
 		</Scripts>
 	</CheckButton>
-	<Frame name="HunterTrackingBarFrame" parent="MainMenuBar" inherits="EditModeActionBarTemplate" mixin="HunterTrackingBarMixin" enableMouse="true" frameStrata="LOW" frameLevel="70" fixedFrameLevel="true" hidden="false">
+	<Frame name="HunterTrackingBarFrame" parent="MainMenuBar" mixin="HunterTrackingBarMixin" enableMouse="true" frameStrata="LOW" frameLevel="70" fixedFrameLevel="true" hidden="false">
 		<Size>
 			<AbsDimension x="509" y="43"/>
 		</Size>

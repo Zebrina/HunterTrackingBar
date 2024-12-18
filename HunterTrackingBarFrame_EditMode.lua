@@ -1,3 +1,7 @@
+--[[------------------------------------------------------------------------------------------------
+        Most of the edit mode related code is here.
+]]--------------------------------------------------------------------------------------------------
+
 HUNTER_TRACKING_BAR_SYSTEM = 437898938 -- CRC32("Hunter Tracking Bar")
 
 local HUD_EDIT_MODE_SETTING_HUNTER_TRACKING_BAR_SHOW_TRACK_PETS = "Show Track Pets"
@@ -187,7 +191,7 @@ local SystemInfoPreset = {
 
 do
 
-    -- TODO
+-- TODO: ?
     --SystemInfoPreset.settings[]
 end
 

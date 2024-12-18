@@ -1,6 +1,6 @@
 ## Interface: 30401
-## Title: Hunter Tracking Bar
 ## Version: 1.0.0
+## Title: Hunter Tracking Bar
 ## Author: Zebrina
 ## Notes: A bar for hunters to quickly toggle tracking types.
 ## OptionalDeps: Masque

@@ -21,6 +21,7 @@
 			<OnEvent method="OnEvent" inherit="append"/>
 			<OnEnter method="OnEnter" inherit="append"/>
 			<OnLeave method="OnLeave" inherit="append"/>
+			<OnClick method="OnClick" inherit="append"/>
 		</Scripts>
 	</CheckButton>
 	<Frame name="HunterTrackingBarFrame" parent="UIParent" inherits="EditModeActionBarTemplate" mixin="HunterTrackingBarMixin" enableMouse="true" frameStrata="LOW" frameLevel="70" fixedFrameLevel="true" hidden="false">
